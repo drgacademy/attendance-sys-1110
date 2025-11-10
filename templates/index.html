@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <nav class="container">
+        <ul>
+            <li><strong>Attendance System</strong></li>
+        </ul>
+        <ul>
+            <li><a href="#people" onclick="showSection('people')">People</a></li>
+            <li><a href="#attendance" onclick="showSection('attendance')">Attendance</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <section id="people-section" class="section-content">
+            <article>
+                <header>Enroll New Person</header>
+                <form id="person-form">
+                    <fieldset>
+                        <legend>Select Role</legend>
+                        <label>
+                            <input type="radio" id="role-student" name="role" value="student" checked>
+                            Student
+                        </label>
+                        <label>
+                            <input type="radio" id="role-teacher" name="role" value="teacher">
+                            Teacher
+                        </label>
+                        <label>
+                            <input type="radio" id="role-staff" name="role" value="staff">
+                            Staff
+                        </label>
+                    </fieldset>
+                    
+                    <div id="student-fields">
+                        <input type="text" id="person-school" name="school" placeholder="School (e.g., NTU)" required>
+                        <input type="text" id="person-year" name="year" placeholder="Year (e.g., 2025)" required pattern="[0-9]{4}">
+                        <input type="text" id="person-firstname" name="first_name" placeholder="First Name (e.g., Vincent)" required>
+                        <input type="text" id="person-lastname" name="last_name" placeholder="Last Name (e.g., Cheng)" required>
+                    </div>
+                    
+                    <div id="teacher-staff-fields" style="display: none;">
+                        <input type="text" id="person-name" name="name" placeholder="First Name (e.g., Vincent)">
+                    </div>
+                    <select id="person-timezone" name="time_zone" required>
+                        <option value="">Select a time zone...</option>
+                        <optgroup label="Asia">
+                            <option value="Asia/Taipei">Asia/Taipei (GMT+8)</option>
+                            <option value="Asia/Tokyo">Asia/Tokyo (GMT+9)</option>
+                            <option value="Asia/Shanghai">Asia/Shanghai (GMT+8)</option>
+                            <option value="Asia/Hong_Kong">Asia/Hong Kong (GMT+8)</option>
+                            <option value="Asia/Seoul">Asia/Seoul (GMT+9)</option>
+                            <option value="Asia/Singapore">Asia/Singapore (GMT+8)</option>
+                            <option value="Asia/Bangkok">Asia/Bangkok (GMT+7)</option>
+                            <option value="Asia/Jakarta">Asia/Jakarta (GMT+7)</option>
+                            <option value="Asia/Manila">Asia/Manila (GMT+8)</option>
+                            <option value="Asia/Kuala_Lumpur">Asia/Kuala Lumpur (GMT+8)</option>
+                            <option value="Asia/Dubai">Asia/Dubai (GMT+4)</option>
+                            <option value="Asia/Kolkata">Asia/Kolkata (GMT+5:30)</option>
+                        </optgroup>
+                        <optgroup label="America">
+                            <option value="America/New_York">America/New York (EST/EDT)</option>
+                            <option value="America/Chicago">America/Chicago (CST/CDT)</option>
+                            <option value="America/Denver">America/Denver (MST/MDT)</option>
+                            <option value="America/Los_Angeles">America/Los Angeles (PST/PDT)</option>
+                            <option value="America/Toronto">America/Toronto (EST/EDT)</option>
+                            <option value="America/Vancouver">America/Vancouver (PST/PDT)</option>
+                            <option value="America/Mexico_City">America/Mexico City (CST/CDT)</option>
+                            <option value="America/Sao_Paulo">America/São Paulo (BRT)</option>
+                        </optgroup>
+                        <optgroup label="Europe">
+                            <option value="Europe/London">Europe/London (GMT/BST)</option>
+                            <option value="Europe/Paris">Europe/Paris (CET/CEST)</option>
+                            <option value="Europe/Berlin">Europe/Berlin (CET/CEST)</option>
+                            <option value="Europe/Rome">Europe/Rome (CET/CEST)</option>
+                            <option value="Europe/Madrid">Europe/Madrid (CET/CEST)</option>
+                            <option value="Europe/Amsterdam">Europe/Amsterdam (CET/CEST)</option>
+                            <option value="Europe/Brussels">Europe/Brussels (CET/CEST)</option>
+                            <option value="Europe/Vienna">Europe/Vienna (CET/CEST)</option>
+                            <option value="Europe/Stockholm">Europe/Stockholm (CET/CEST)</option>
+                            <option value="Europe/Moscow">Europe/Moscow (MSK)</option>
+                        </optgroup>
+                        <optgroup label="Pacific">
+                            <option value="Pacific/Auckland">Pacific/Auckland (NZST/NZDT)</option>
+                            <option value="Pacific/Fiji">Pacific/Fiji (FJT)</option>
+                            <option value="Pacific/Honolulu">Pacific/Honolulu (HST)</option>
+                        </optgroup>
+                        <optgroup label="Australia">
+                            <option value="Australia/Sydney">Australia/Sydney (AEDT/AEST)</option>
+                            <option value="Australia/Melbourne">Australia/Melbourne (AEDT/AEST)</option>
+                            <option value="Australia/Brisbane">Australia/Brisbane (AEST)</option>
+                            <option value="Australia/Perth">Australia/Perth (AWST)</option>
+                        </optgroup>
+                        <optgroup label="Africa">
+                            <option value="Africa/Cairo">Africa/Cairo (EET)</option>
+                            <option value="Africa/Johannesburg">Africa/Johannesburg (SAST)</option>
+                            <option value="Africa/Lagos">Africa/Lagos (WAT)</option>
+                        </optgroup>
+                        <optgroup label="Other">
+                            <option value="UTC">UTC (Coordinated Universal Time)</option>
+                        </optgroup>
+                    </select>
+                    <div class="camera-section">
+                        <div class="enrollment-camera-wrapper">
+                            <video id="person-camera" autoplay playsinline></video>
+                            <canvas id="person-canvas" hidden></canvas>
+                            <div id="person-camera-overlay" class="camera-overlay">
+                                <div class="face-guide"></div>
+                            </div>
+                            <div id="enrollment-result-overlay" class="enrollment-result-overlay">
+                                <div class="enrollment-result-content">
+                                    <div class="enrollment-result-icon" id="enrollment-result-icon"></div>
+                                    <div class="enrollment-result-text" id="enrollment-result-text"></div>
+                                    <div class="enrollment-result-ident" id="enrollment-result-ident"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="person-preview" class="image-preview" hidden>
+                            <img id="person-preview-img" src="" alt="Captured photo">
+                        </div>
+                    </div>
+                    <div class="grid" style="padding-top: 1rem;">
+                        <button type="button" id="person-capture-btn" onclick="capturePhoto('person')" hidden>Capture Photo</button>
+                        <button type="button" id="person-retake-btn" onclick="retakePhoto('person')" hidden>Retake Photo</button>
+                    </div>
+                    <div>
+                        <button type="submit" id="enroll-btn" disabled>Enroll Person</button>
+                    </div>
+                </form>
+            </article>
+
+            <article>
+                <header>Enrolled People</header>
+                <div class="search-container">
+                    <input type="text" id="student-search" placeholder="Search by name, ID, school, or year..." onkeyup="filterStudents()">
+                </div>
+                <div class="table-container">
+                    <table id="students-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Time Zone</th>
+                                <th>Created</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-table-body">
+                            <tr>
+                                <td colspan="4" style="text-align: center; padding: 2rem;">
+                                    <span class="loading"></span> Loading people...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="students-count" class="students-count"></div>
+            </article>
+        </section>
+        <section id="attendance-section" class="section-content" style="display:none;">
+            <article class="attendance-station">
+                <header>Attendance Station</header>
+                
+                <div class="attendance-camera-container">
+                    <video id="attendance-camera" autoplay playsinline></video>
+                    <canvas id="attendance-canvas" style="display:none;"></canvas>
+                    <div id="attendance-overlay" class="camera-overlay">
+                        <div class="face-guide"></div>
+                    </div>
+                    <div id="attendance-result-overlay" class="attendance-result-overlay">
+                        <div class="attendance-result-content">
+                            <div class="attendance-result-icon" id="result-icon"></div>
+                            <div class="attendance-result-text" id="result-text"></div>
+                            <div class="attendance-result-ident" id="result-ident"></div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" id="punch-btn" onclick="handleFacialPunch()">Punch</button>
+                </div>
+            </article>
+
+            <article class="manual-punch">
+                <header>Manual Punch</header>
+                <form id="manual-attendance-form">
+                    <label>
+                        <input type="text" id="manual-ident" name="ident" placeholder="ID (e.g., NTU2025 Vincent Cheng or TEACHER Vincent)" required>
+                    </label>
+                    <button type="submit" class="secondary">Manual Punch</button>
+                </form>
+                <div id="manual-attendance-result"></div>
+            </article>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

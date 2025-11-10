@@ -1,0 +1,427 @@
+:root {
+    --primary: rgb(60, 130, 245);
+    --success: rgb(15, 185, 130);
+    --warning: rgb(245, 160, 10);
+    --danger: rgb(240, 70, 70);
+}
+
+/* Camera Section Container */
+.camera-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Image Preview */
+.image-preview {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.image-preview img {
+    width: 100%;
+    height: auto;
+    max-height: 480px;
+    object-fit: contain;
+    border: 3px solid var(--primary);
+    border-radius: 12px;
+}
+
+/* Enrollment Camera - Responsive Design */
+.enrollment-camera-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #000;
+}
+
+.enrollment-camera-wrapper #person-camera {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.enrollment-camera-wrapper .camera-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.enrollment-camera-wrapper .face-guide {
+    width: 40%;
+    max-width: 200px;
+    aspect-ratio: 3 / 4;
+    border-radius: 50%;
+    background: transparent;
+    animation: pulse 1.5s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+}
+
+/* Attendance Station */
+.attendance-station {
+    text-align: left;
+}
+
+#punch-btn {
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 1rem;
+}
+
+/* Attendance Camera - Responsive Design */
+.attendance-camera-container {
+    position: relative;
+    margin: 0 auto 1.5rem auto;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    background: #000;
+}
+
+#attendance-camera {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    min-height: 400px;
+}
+
+/* Camera Overlay */
+.camera-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+/* Face Guide - Responsive */
+.face-guide {
+    width: 50%;
+    max-width: 300px;
+    aspect-ratio: 3 / 4;
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Attendance Result Overlay */
+.attendance-result-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+}
+
+.attendance-result-overlay.show {
+    opacity: 1;
+}
+
+.attendance-result-overlay.success {
+    background: rgba(15, 185, 130, 0.9);
+}
+
+.attendance-result-overlay.failure {
+    background: rgba(240, 70, 70, 0.9);
+}
+
+.attendance-result-content {
+    text-align: center;
+    padding: 2rem;
+    color: white;
+}
+
+.attendance-result-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    animation: scaleIn 0.4s ease-out;
+}
+
+.attendance-result-text {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.attendance-result-ident {
+    font-size: 1.5rem;
+    font-weight: 500;
+    opacity: 0.95;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Enrollment Result Overlay */
+.enrollment-result-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none;
+    border-radius: 12px;
+}
+
+.enrollment-result-overlay.show {
+    opacity: 1;
+}
+
+.enrollment-result-overlay.success {
+    background: rgba(15, 185, 130, 0.9);
+}
+
+.enrollment-result-overlay.failure {
+    background: rgba(240, 70, 70, 0.9);
+}
+
+.enrollment-result-overlay.processing {
+    background: rgba(60, 130, 245, 0.9);
+}
+
+.enrollment-result-content {
+    text-align: center;
+    padding: 2rem;
+    color: white;
+}
+
+.enrollment-result-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: scaleIn 0.4s ease-out;
+}
+
+.enrollment-result-text {
+    font-size: 1.75rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.enrollment-result-ident {
+    font-size: 1.25rem;
+    font-weight: 500;
+    opacity: 0.95;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 9999px rgba(60, 130, 245, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 0 0px rgba(60, 130, 245, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 9999px rgba(60, 130, 245, 0.5);
+    }
+}
+
+/* Scale In Animation */
+@keyframes scaleIn {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Fade In Up Animation */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tablet Responsive */
+@media (max-width: 992px) {
+    .face-guide {
+        width: 45%;
+    }
+    
+    .enrollment-camera-wrapper .face-guide {
+        width: 45%;
+    }
+    
+    #attendance-camera {
+        min-height: 350px;
+    }
+    
+    .attendance-result-icon {
+        font-size: 4rem;
+    }
+    
+    .attendance-result-text {
+        font-size: 1.75rem;
+    }
+    
+    .attendance-result-ident {
+        font-size: 1.25rem;
+    }
+    
+    .enrollment-result-icon {
+        font-size: 3.5rem;
+    }
+    
+    .enrollment-result-text {
+        font-size: 1.5rem;
+    }
+    
+    .enrollment-result-ident {
+        font-size: 1.1rem;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 720px) {
+    .face-guide {
+        width: 60%;
+        max-width: 200px;
+    }
+    
+    .enrollment-camera-wrapper .face-guide {
+        width: 50%;
+        max-width: 150px;
+    }
+    
+    #attendance-camera {
+        min-height: 300px;
+    }
+    
+    .attendance-result-icon {
+        font-size: 3.5rem;
+    }
+    
+    .attendance-result-text {
+        font-size: 1.5rem;
+    }
+    
+    .attendance-result-ident {
+        font-size: 1.1rem;
+    }
+    
+    .attendance-result-content {
+        padding: 1.5rem;
+    }
+    
+    .enrollment-result-icon {
+        font-size: 3rem;
+    }
+    
+    .enrollment-result-text {
+        font-size: 1.3rem;
+    }
+    
+    .enrollment-result-ident {
+        font-size: 1rem;
+    }
+    
+    .enrollment-result-content {
+        padding: 1.5rem;
+    }
+    
+    #punch-btn {
+        font-size: 1.1rem;
+        padding: 0.875rem;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .face-guide {
+        width: 70%;
+    }
+    
+    .enrollment-camera-wrapper .face-guide {
+        width: 60%;
+    }
+    
+    #attendance-camera {
+        min-height: 250px;
+    }
+    
+    .attendance-result-icon {
+        font-size: 3rem;
+    }
+    
+    .attendance-result-text {
+        font-size: 1.25rem;
+    }
+    
+    .attendance-result-ident {
+        font-size: 1rem;
+    }
+    
+    .enrollment-result-icon {
+        font-size: 2.5rem;
+    }
+    
+    .enrollment-result-text {
+        font-size: 1.1rem;
+    }
+    
+    .enrollment-result-ident {
+        font-size: 0.9rem;
+    }
+}
+
+/* Smooth Transitions */
+video {
+    transition: opacity 0.3s ease;
+}
+
+button {
+    transition: all 0.2s ease;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

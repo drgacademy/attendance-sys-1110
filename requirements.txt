@@ -1,0 +1,17 @@
+flask
+gunicorn
+python-dotenv
+
+# PostgreSQL driver
+psycopg2-binary
+
+deepface
+tf-keras
+
+faiss-cpu
+
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client
+google-cloud-storage
