@@ -25,6 +25,6 @@ class Config:
     
     # Google Cloud Storage settings
     GCS_CREDENTIALS_PATH = os.getenv('GCS_CREDENTIALS_PATH', None)
-    GCS_BUCKET_NAME = os.getenv('GCS_BUCKET_NAME', 'attendance-system-v1')
+    GCS_BUCKET_NAME = os.getenv('GCS_BUCKET_NAME', 'drg-attendance-images')
     GCS_USE_PUBLIC_URLS = os.getenv('GCS_USE_PUBLIC_URLS', 'False')
     GCS_SIGNED_URL_EXPIRY_HOURS = int(os.getenv('GCS_SIGNED_URL_EXPIRY_HOURS', '24'))
